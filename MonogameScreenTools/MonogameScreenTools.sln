@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonogameScreenTools.SharedProject", "MonogameScreenTools.SharedProject\MonogameScreenTools.SharedProject.shproj", "{8C9C0123-AF9F-4FD6-BB2E-4CCD1E205624}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonogameScreenTools.Android", "MonogameScreenTools.Android\MonogameScreenTools.Android.csproj", "{14EED474-C3A7-4375-BF70-7407B1106978}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonogameScreenTools.WindowsDX", "MonogameScreenTools.WindowsDX\MonogameScreenTools.WindowsDX.csproj", "{A6E5B7EC-F9D3-49A2-8C25-FD5E1E28746D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonogameScreenTools.iOS", "MonogameScreenTools.iOS\MonogameScreenTools.iOS.csproj", "{E71F3053-056C-4381-9638-048ED73BDFF6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7926400F-FB18-4AF1-8EDB-BBC7EA1F23CC}"
+	ProjectSection(SolutionItems) = preProject
+		buildNugetPackages.ps1 = buildNugetPackages.ps1
+		MonogameScreenTools.nuspec = MonogameScreenTools.nuspec
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		MonogameScreenTools.SharedProject\MonogameScreenTools.SharedProject.projitems*{14eed474-c3a7-4375-bf70-7407b1106978}*SharedItemsImports = 4
+		MonogameScreenTools.SharedProject\MonogameScreenTools.SharedProject.projitems*{8c9c0123-af9f-4fd6-bb2e-4ccd1e205624}*SharedItemsImports = 13
+		MonogameScreenTools.SharedProject\MonogameScreenTools.SharedProject.projitems*{a6e5b7ec-f9d3-49a2-8c25-fd5e1e28746d}*SharedItemsImports = 4
+		MonogameScreenTools.SharedProject\MonogameScreenTools.SharedProject.projitems*{e71f3053-056c-4381-9638-048ed73bdff6}*SharedItemsImports = 4
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{14EED474-C3A7-4375-BF70-7407B1106978}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14EED474-C3A7-4375-BF70-7407B1106978}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14EED474-C3A7-4375-BF70-7407B1106978}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14EED474-C3A7-4375-BF70-7407B1106978}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6E5B7EC-F9D3-49A2-8C25-FD5E1E28746D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6E5B7EC-F9D3-49A2-8C25-FD5E1E28746D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6E5B7EC-F9D3-49A2-8C25-FD5E1E28746D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6E5B7EC-F9D3-49A2-8C25-FD5E1E28746D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E71F3053-056C-4381-9638-048ED73BDFF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E71F3053-056C-4381-9638-048ED73BDFF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E71F3053-056C-4381-9638-048ED73BDFF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E71F3053-056C-4381-9638-048ED73BDFF6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CF4AF83E-EA4B-42B2-AF98-C60C1E4C3E3F}
+	EndGlobalSection
+EndGlobal

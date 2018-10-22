@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+	<metadata>
+		<id>MonogameScreenTools</id>
+		<version>1.0.2</version>
+		<title>MonogameScreenTools</title>
+		<authors>dmanning23</authors>
+		<owners>dmanning23</owners>
+		<projectUrl>https://github.com/dmanning23/MonogameScreenTools</projectUrl>
+		<licenseUrl>https://github.com/dmanning23/MonogameScreenTools/blob/master/LICENSE.txt</licenseUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>MonoGame library for taking screenshots and exporting gameplay to an animated gif</description>
+		<releaseNotes />
+		<copyright>Copyright 2016</copyright>
+		<tags>android, ios, monogame</tags>
+		<dependencies>
+
+			<!--Xamarin.Android-->
+			<group targetFramework="MonoAndroid10">
+				<dependency id="MonoGame.Framework.Android" version="3.7"/>
+				<dependency id="SixLabors.ImageSharp" version="1.0.0-beta0005"/>
+			</group>
+
+			<!--Xamarin.iOS Unified-->
+			<group targetFramework="Xamarin.iOS10">
+				<dependency id="MonoGame.Framework.iOS" version="3.7"/>
+				<dependency id="SixLabors.ImageSharp" version="1.0.0-beta0005"/>
+			</group>
+
+			<group targetFramework="net451">
+				<dependency id="MonoGame.Framework.WindowsDX" version="3.7"/>
+				<dependency id="SixLabors.ImageSharp" version="1.0.0-beta0005"/>
+			</group>
+
+		</dependencies>
+	</metadata>
+	<files>
+
+		<!--Xamarin.Android-->
+		<file src="MonogameScreenTools.Android\bin\Release\MonogameScreenTools.Android.pdb" target="lib\MonoAndroid10\MonogameScreenTools.Android.pdb" />
+		<file src="MonogameScreenTools.Android\bin\Release\MonogameScreenTools.Android.dll" target="lib\MonoAndroid10\MonogameScreenTools.Android.dll" />
+
+		<!--Xamarin.iOS Unified-->
+		<file src="MonogameScreenTools.iOS\bin\Release\MonogameScreenTools.iOS.pdb" target="lib\Xamarin.iOS10\MonogameScreenTools.iOS.pdb" />
+		<file src="MonogameScreenTools.iOS\bin\Release\MonogameScreenTools.iOS.dll" target="lib\Xamarin.iOS10\MonogameScreenTools.iOS.dll" />
+
+		<!--WindowsDX-->
+		<file src="MonogameScreenTools.WindowsDX\bin\Release\MonogameScreenTools.WindowsDX.pdb" target="lib\net451\MonogameScreenTools.WindowsDX.pdb" />
+		<file src="MonogameScreenTools.WindowsDX\bin\Release\MonogameScreenTools.WindowsDX.dll" target="lib\net451\MonogameScreenTools.WindowsDX.dll" />
+
+	</files>
+</package>

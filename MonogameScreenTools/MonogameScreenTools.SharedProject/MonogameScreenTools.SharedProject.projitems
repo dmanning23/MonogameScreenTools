@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>8c9c0123-af9f-4fd6-bb2e-4ccd1e205624</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>MonogameScreenTools.SharedProject</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)FileSystemHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ImageList.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IGifHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ImageData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GifHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IScreenShotHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ScreenShotHelper.cs" />
+  </ItemGroup>
+</Project>
