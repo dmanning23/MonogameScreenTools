@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Gif;
 using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 using System.IO;
 
 namespace MonogameScreenTools
@@ -25,7 +26,7 @@ namespace MonogameScreenTools
 		/// IF no filename is specified, a default filename using DateTime.Now.ToFileTime() is used.
 		/// </summary>
 		/// <param name="filename">The output filename</param>
-		public string Export(ImageList imageList, string filename = "", bool appendTimeStamp = true)
+		public string Export(ImageList imageList, string filename = "", bool appendTimeStamp = true, float scale = 0.5f)
 		{
 			//Setup the filename
 			if (string.IsNullOrEmpty(filename))
@@ -45,15 +46,18 @@ namespace MonogameScreenTools
 				using (var image = new Image<Rgba32>(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height))
 				{
 					//Convert all the monogame info to ImageSharp data
-					var frames = image.Frames;
 					foreach (var imageData in imageList.Images)
 					{
 						ConvertColorData(imageData.Data, rgbaBuffer);
-						var frame = frames.AddFrame(rgbaBuffer);
-						frame.MetaData.FrameDelay = imageData.DelayMS;
+						var frame = image.Frames.AddFrame(rgbaBuffer);
+						frame.MetaData.FrameDelay = imageData.DelayMS / 10;
 					}
 
+					//remove the frame created with image creation
+					image.Frames.RemoveFrame(0);
+
 					//Save it all out!
+					image.Mutate(x => x.Resize((int)(image.Width * scale), (int)(image.Height * scale)));
 					image.SaveAsGif(stream, new GifEncoder());
 				}
 			}

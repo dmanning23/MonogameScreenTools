@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonogameScreenTools;
 using System;
+using System.Threading.Tasks;
 
 namespace Testbed
 {
@@ -15,6 +16,8 @@ namespace Testbed
 
 		#region MonoGame junk
 
+		const int millisPerFrame = 100;
+
 		GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
 		Texture2D mgLogo;
@@ -24,7 +27,7 @@ namespace Testbed
 		Vector2 center = new Vector2(200, 200);
 		bool gifSaveRequested = false;
 		bool doSingleScreenshot = false;
-		double lastUpdate = 250;
+		double lastUpdate = millisPerFrame;
 
 		#endregion //MonoGame junk
 
@@ -76,26 +79,29 @@ namespace Testbed
 		/// Allows the game to run logic such as updating the world,
 		/// checking for collisions, gathering input, and playing audio.
 		/// </summary>
-		/// <param name="gameTime">Provides a snapshot of timing values.</param>        
+		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Update(GameTime gameTime)
 		{
+#if !__IOS__
 			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
 				Exit();
+#endif
 
 			if (Keyboard.GetState().IsKeyDown(Keys.F12))
 			{
 				//only send a frame every 250ms
 				lastUpdate += gameTime.ElapsedGameTime.TotalMilliseconds;
-				if (lastUpdate > 250)
+				if (lastUpdate > millisPerFrame)
 				{
 					gifSaveRequested = true;
-					images.AddFrame(GraphicsDevice, 250);
+					images.AddFrame(GraphicsDevice, millisPerFrame);
 					lastUpdate = 0;
 				}
 			}
 			else if (gifSaveRequested)
 			{
 				var result = gif.Export(images);
+				images = new ImageList();
 				Console.WriteLine($"Wrote gif to: {result}");
 				gifSaveRequested = false;
 			}
