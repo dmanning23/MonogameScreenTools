@@ -10,7 +10,11 @@ namespace MonogameScreenTools
 	{
 		#region Properties
 
-		public List<ImageData> Images { get; private set; }
+		public int NumImages { get; set; }
+
+		public Queue<ImageData> Images { get; private set; }
+
+		private Stack<ImageData> Warehouse { get; set; }
 
 		#endregion //Properties
 
@@ -20,9 +24,16 @@ namespace MonogameScreenTools
 		/// Uses GifEncoder to Queue multiple frames and write them to file.
 		/// </summary>
 		/// <param name="device">The graphics device used to grab a backbuffer.</param>
-		public ImageList()
+		public ImageList(GraphicsDevice graphicsDevice)
 		{
-			Images = new List<ImageData>();
+			NumImages = 20;
+			Images = new Queue<ImageData>();
+			Warehouse = new Stack<ImageData>();
+
+			for (int i = 0; i < NumImages; i++)
+			{
+				Warehouse.Push(new ImageData(graphicsDevice));
+			}
 		}
 
 		/// <summary>
@@ -31,12 +42,34 @@ namespace MonogameScreenTools
 		/// <param name="delayMilliseconds">Optional delay for this frame in milliseconds </param>
 		public void AddFrame(GraphicsDevice graphicsDevice, int delayMilliseconds = 0)
 		{
-			Images.Add(new ImageData(graphicsDevice, delayMilliseconds));
+			if (Images.Count > NumImages)
+			{
+				var image = Images.Dequeue();
+				image.SetData(graphicsDevice, delayMilliseconds);
+				Images.Enqueue(image);
+			}
+			else if (Warehouse.Count > 0)
+			{
+				var image = Warehouse.Pop();
+				image.SetData(graphicsDevice, delayMilliseconds);
+				Images.Enqueue(image);
+			}
+		}
+
+		public void Clear()
+		{
+			foreach (var image in Images)
+			{
+				Warehouse.Push(Images.Dequeue());
+			}
 		}
 
 		public void AppendFrames(ImageList nextFrames)
 		{
-			Images.AddRange(nextFrames.Images);
+			foreach (var image in nextFrames.Images)
+			{
+				Images.Enqueue(image);
+			}
 		}
 
 		#endregion //Methods

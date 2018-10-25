@@ -38,14 +38,16 @@ namespace MonogameScreenTools
 			filename = FileSystemHelper.CreateFilename(filename, ".png", appendTimeStamp);
 
 			//Dump the screen contents to a file
-			var colors = new Color[GraphicsDevice.Viewport.Width * GraphicsDevice.Viewport.Height];
+			var width = GraphicsDevice.PresentationParameters.BackBufferWidth;
+			var height = GraphicsDevice.PresentationParameters.BackBufferHeight;
+			var colors = new Color[width * height];
 			GraphicsDevice.GetBackBufferData<Color>(colors);
-			using (var tex2D = new Texture2D(GraphicsDevice, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height))
+			using (var tex2D = new Texture2D(GraphicsDevice, width, height))
 			{
 				tex2D.SetData<Color>(colors);
 				using (var stream = File.Create(filename))
 				{
-					tex2D.SaveAsPng(stream, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+					tex2D.SaveAsPng(stream, width, height);
 				}
 			}
 

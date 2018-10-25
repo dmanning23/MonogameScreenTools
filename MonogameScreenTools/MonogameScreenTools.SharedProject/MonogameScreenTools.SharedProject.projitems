@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)FileSystemHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GifCreatedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ImageList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IGifHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ImageData.cs" />

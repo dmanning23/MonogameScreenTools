@@ -1,41 +1,14 @@
-﻿using Plugin.Permissions;
-using Plugin.Permissions.Abstractions;
-using System;
+﻿using System;
 using System.IO;
-using System.Threading.Tasks;
+#if ANDROID
+using Android.OS;
+using Environment = Android.OS.Environment;
+#endif
 
 namespace MonogameScreenTools
 {
 	public static class FileSystemHelper
 	{
-		public static async Task<bool> AskForExternalFilesystemPermission()
-		{
-#if __IOS__ || ANDROID
-			var available = false;
-			try
-			{
-				var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
-				if (status != PermissionStatus.Granted)
-				{
-					var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Storage);
-					status = results[Permission.Storage];
-				}
-
-				if (status == PermissionStatus.Granted)
-				{
-					//TODO: check if media is mounted
-					available = true;
-				}
-			}
-			catch (Exception)
-			{
-			}
-			return available;
-#else
-			return true;
-#endif
-		}
-
 		/// <summary>
 		/// Generate and save a screenshot.
 		/// </summary>
@@ -54,7 +27,18 @@ namespace MonogameScreenTools
 			filename += extension;
 
 			//put the file in the Pictures folder. This assumes you have all the correct external storage permissions!!!
+#if ANDROID
+			var fullFilename = Environment.GetExternalStoragePublicDirectory(Environment.DirectoryPictures).AbsolutePath;
+#else
 			var fullFilename = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+#endif
+
+			//create that directory if it doesn't exist
+			if (!Directory.Exists(fullFilename))
+			{
+				Directory.CreateDirectory(fullFilename);
+			}
+
 			fullFilename = Path.Combine(fullFilename, filename);
 
 			return fullFilename;

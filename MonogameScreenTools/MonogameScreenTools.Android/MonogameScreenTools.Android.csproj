@@ -52,17 +52,14 @@
     <None Include="Resources\AboutResources.txt" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="ImageSharp">
+      <Version>1.0.0-alpha9-00194</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.Platforms">
       <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="MonoGame.Framework.Android">
       <Version>3.7.0.1708</Version>
-    </PackageReference>
-    <PackageReference Include="Plugin.Permissions">
-      <Version>3.0.0.12</Version>
-    </PackageReference>
-    <PackageReference Include="SixLabors.ImageSharp">
-      <Version>1.0.0-beta0005</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="27.0.2.1" />
   </ItemGroup>

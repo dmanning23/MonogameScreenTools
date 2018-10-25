@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Threading.Tasks;
 
 namespace MonogameScreenTools
 {
@@ -18,12 +19,15 @@ namespace MonogameScreenTools
 
 		#region Methods
 
-		public ImageData(GraphicsDevice graphicsDevice, int delyaMS)
+		public ImageData(GraphicsDevice graphicsDevice)
 		{
-			Data = new Color[graphicsDevice.Viewport.Width * graphicsDevice.Viewport.Height];
-			graphicsDevice.GetBackBufferData<Color>(Data);
+			Data = new Color[graphicsDevice.PresentationParameters.BackBufferWidth * graphicsDevice.PresentationParameters.BackBufferHeight];
+		}
 
-			DelayMS = delyaMS;
+		public void SetData(GraphicsDevice graphicsDevice, int delayMS)
+		{
+			graphicsDevice.GetBackBufferData<Color>(Data);
+			DelayMS = delayMS;
 		}
 
 		#endregion //Methods
