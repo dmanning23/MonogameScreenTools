@@ -2355,6 +2355,12 @@ namespace MonogameScreenTools.Android
 		public partial class String
 		{
 			
+			// aapt resource value: 0x7f050020
+			public static int ApplicationName = 2131034144;
+			
+			// aapt resource value: 0x7f05001f
+			public static int Hello = 2131034143;
+			
 			// aapt resource value: 0x7f050000
 			public static int abc_action_bar_home_description = 2131034112;
 			
@@ -2442,11 +2448,11 @@ namespace MonogameScreenTools.Android
 			// aapt resource value: 0x7f050010
 			public static int abc_toolbar_collapse_description = 2131034128;
 			
-			// aapt resource value: 0x7f050020
-			public static int app_name = 2131034144;
+			// aapt resource value: 0x7f050022
+			public static int app_name = 2131034146;
 			
-			// aapt resource value: 0x7f05001f
-			public static int hello = 2131034143;
+			// aapt resource value: 0x7f050021
+			public static int hello = 2131034145;
 			
 			// aapt resource value: 0x7f050011
 			public static int search_menu_title = 2131034129;

@@ -30,6 +30,12 @@ namespace MonogameScreenTools
 			DelayMS = delayMS;
 		}
 
+		public void SetData(Texture2D tex, int delayMS)
+		{
+			tex.GetData<Color>(Data);
+			DelayMS = delayMS;
+		}
+
 		#endregion //Methods
 	}
 }

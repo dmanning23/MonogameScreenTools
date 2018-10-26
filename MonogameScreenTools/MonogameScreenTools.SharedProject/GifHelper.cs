@@ -5,9 +5,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SixLabors.Primitives;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace MonogameScreenTools
 {
@@ -16,9 +18,11 @@ namespace MonogameScreenTools
 		private GraphicsDevice GraphicsDevice { get; set; }
 		BackgroundWorker _backgroundThread;
 		string Filename;
-		ImageList ImageList;
+		public List<ImageData> ImageList { get; set; }
 		float Scale;
 		TimeSpan elapsed;
+
+		public event EventHandler<GifCreatedEventArgs> OnGifCreated;
 
 		/// <summary>
 		/// Uses GifEncoder to Queue multiple frames and write them to file.
@@ -30,8 +34,6 @@ namespace MonogameScreenTools
 			elapsed = new TimeSpan();
 		}
 
-		public event EventHandler<GifCreatedEventArgs> OnGifCreated;
-
 		/// <summary>
 		/// Writes all images to file as a single GIF. 
 		/// IF no filename is specified, a default filename using DateTime.Now.ToFileTime() is used.
@@ -39,7 +41,7 @@ namespace MonogameScreenTools
 		/// <param name="filename">The output filename</param>
 		public void Export(ImageList imageList, string filename = "", bool appendTimeStamp = true, float scale = 0.5f)
 		{
-			ImageList = imageList;
+			ImageList = imageList.Images.ToList();
 			Scale = scale;
 
 			//Setup the filename
@@ -78,7 +80,7 @@ namespace MonogameScreenTools
 				using (var image = new Image<Rgba32>(width, height))
 				{
 					//Convert all the monogame info to ImageSharp data
-					foreach (var imageData in ImageList.Images)
+					foreach (var imageData in ImageList)
 					{
 						var imageFrame = new ImageFrame<Rgba32>(width, height);
 						ConvertColorData(imageData.Data, imageFrame);

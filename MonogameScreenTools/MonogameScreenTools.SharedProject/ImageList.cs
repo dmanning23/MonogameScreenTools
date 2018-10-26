@@ -56,6 +56,22 @@ namespace MonogameScreenTools
 			}
 		}
 
+		public void AddFrame(Texture2D tex, int delayMilliseconds = 0)
+		{
+			if (Images.Count >= NumImages)
+			{
+				var image = Images.Dequeue();
+				image.SetData(tex, delayMilliseconds);
+				Images.Enqueue(image);
+			}
+			else if (Warehouse.Count > 0)
+			{
+				var image = Warehouse.Pop();
+				image.SetData(tex, delayMilliseconds);
+				Images.Enqueue(image);
+			}
+		}
+
 		public void Clear()
 		{
 			foreach (var image in Images)
