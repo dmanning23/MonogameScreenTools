@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Threading.Tasks;
 
 namespace MonogameScreenTools
 {
@@ -22,12 +21,6 @@ namespace MonogameScreenTools
 		public ImageData(GraphicsDevice graphicsDevice)
 		{
 			Data = new Color[graphicsDevice.PresentationParameters.BackBufferWidth * graphicsDevice.PresentationParameters.BackBufferHeight];
-		}
-
-		public void SetData(GraphicsDevice graphicsDevice, int delayMS)
-		{
-			graphicsDevice.GetBackBufferData<Color>(Data);
-			DelayMS = delayMS;
 		}
 
 		public void SetData(Texture2D tex, int delayMS)

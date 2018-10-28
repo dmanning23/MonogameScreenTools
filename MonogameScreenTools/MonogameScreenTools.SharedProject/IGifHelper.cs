@@ -6,6 +6,6 @@ namespace MonogameScreenTools
 	{
 		event EventHandler<GifCreatedEventArgs> OnGifCreated;
 
-		void Export(ImageList imageList, string filename = "", bool appendTimeStamp = true, float scale = 0.35f, float endPause = 0.6f);
+		void Export(ImageList imageList, string filename = "", bool appendTimeStamp = true, int scale = 4, float endPause = 0.6f);
 	}
 }

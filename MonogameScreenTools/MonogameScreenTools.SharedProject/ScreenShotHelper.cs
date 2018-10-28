@@ -32,7 +32,7 @@ namespace MonogameScreenTools
 			//Setup the filename
 			if (string.IsNullOrEmpty(filename))
 			{
-				filename = $"screenshot_";
+				filename = $"screenshot";
 				appendTimeStamp = true;
 			}
 			filename = FileSystemHelper.CreateFilename(filename, ".png", appendTimeStamp);

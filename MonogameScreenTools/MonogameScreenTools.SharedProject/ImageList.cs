@@ -43,26 +43,6 @@ namespace MonogameScreenTools
 			}
 		}
 
-		/// <summary>
-		/// Adds a single frame to the Frame Queue
-		/// </summary>
-		/// <param name="delayMilliseconds">Optional delay for this frame in milliseconds </param>
-		public void AddFrame(GraphicsDevice graphicsDevice, int delayMilliseconds = 0)
-		{
-			if (Images.Count > NumImages)
-			{
-				var image = Images.Dequeue();
-				image.SetData(graphicsDevice, delayMilliseconds);
-				Images.Enqueue(image);
-			}
-			else if (Warehouse.Count > 0)
-			{
-				var image = Warehouse.Pop();
-				image.SetData(graphicsDevice, delayMilliseconds);
-				Images.Enqueue(image);
-			}
-		}
-
 		public void AddFrame(Texture2D tex, int delayMilliseconds = 0)
 		{
 			if (Images.Count >= NumImages)

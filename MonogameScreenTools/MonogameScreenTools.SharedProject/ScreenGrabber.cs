@@ -73,34 +73,23 @@ namespace MonogameScreenTools
 		{
 			frameTimer.Update(gameTime);
 
+			//Grab a frame if the timer has expired
 			if (!frameTimer.Paused && !frameTimer.HasTimeRemaining)
 			{
 				CurrentImageList.AddFrame(sceneRenderTarget, (int)(FrameDelay * 1000));
 				frameTimer.Start(FrameDelay);
 			}
 
-			// Pass 4: draw both rendertarget 1 and the original scene
-			// image back into the main backbuffer, using a shader that
-			// combines them to produce the final bloomed result.
+			//Draw the entire rendered frame to the screen.
 			GraphicsDevice.SetRenderTarget(null);
 
-			// Look up the resolution and format of our main backbuffer.
 			int width = GraphicsDevice.PresentationParameters.BackBufferWidth;
 			int height = GraphicsDevice.PresentationParameters.BackBufferHeight;
 
-			DrawFullscreenQuad(sceneRenderTarget, width, height);
-		}
-
-		/// <summary>
-		/// Helper for drawing a texture into the current rendertarget,
-		/// using a custom shader to apply postprocessing effects.
-		/// </summary>
-		void DrawFullscreenQuad(Texture2D texture, int width, int height)
-		{
 			SpriteBatch.Begin(SpriteSortMode.Deferred,
 							  BlendState.Opaque,
 							  null, null, null, null);
-			SpriteBatch.Draw(texture, new Rectangle(0, 0, width, height), Color.White);
+			SpriteBatch.Draw(sceneRenderTarget, new Rectangle(0, 0, width, height), Color.White);
 			SpriteBatch.End();
 		}
 
