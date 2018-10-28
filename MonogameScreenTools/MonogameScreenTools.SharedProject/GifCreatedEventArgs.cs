@@ -5,16 +5,18 @@ namespace MonogameScreenTools
 	public class GifCreatedEventArgs : EventArgs
 	{
 		public string Filename { get; set; }
-		public TimeSpan ElpasedTime  { get; set; }
+		public TimeSpan ResizeTime { get; set; }
+		public TimeSpan TotalTime  { get; set; }
 
 		public GifCreatedEventArgs()
 		{
 		}
 
-		public GifCreatedEventArgs(string filename, TimeSpan time)
+		public GifCreatedEventArgs(string filename, TimeSpan resizeTime, TimeSpan totalTime)
 		{
 			Filename = filename;
-			ElpasedTime = time;
+			ResizeTime = resizeTime;
+			TotalTime = totalTime;
 		}
 	}
 }

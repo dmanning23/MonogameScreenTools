@@ -20,7 +20,7 @@ namespace MonogameScreenTools
 			//Setup the filename
 			if (appendTimeStamp)
 			{
-				filename += DateTime.Now.ToFileTime();
+				filename += $"_{DateTime.Now.ToFileTime()}";
 			}
 
 			//append the file extension

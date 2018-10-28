@@ -16,6 +16,10 @@ namespace MonogameScreenTools
 
 		private Stack<ImageData> Warehouse { get; set; }
 
+		public int Width { get; private set; }
+
+		public int Height { get; private set; }
+
 		#endregion //Properties
 
 		#region Methods
@@ -29,6 +33,9 @@ namespace MonogameScreenTools
 			NumImages = 20;
 			Images = new Queue<ImageData>();
 			Warehouse = new Stack<ImageData>();
+
+			Width = graphicsDevice.PresentationParameters.BackBufferWidth;
+			Height = graphicsDevice.PresentationParameters.BackBufferHeight;
 
 			for (int i = 0; i < NumImages; i++)
 			{
