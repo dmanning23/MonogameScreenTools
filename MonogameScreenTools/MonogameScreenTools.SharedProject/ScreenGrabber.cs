@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GameTimer;
+﻿using GameTimer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MonogameScreenTools
 {
-	public class ScreenGrabber
+	public class ScreenGrabber : IScreenGrabber
 	{
 		#region Properties
 
@@ -21,12 +18,15 @@ namespace MonogameScreenTools
 		float FrameDelay { get; set; }
 		CountdownTimer frameTimer;
 
+		public bool Enabled { get; set; }
+
 		#endregion //Properties
 
 		#region Methods
 
 		public ScreenGrabber(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, float frameDelay = 0.1f)
 		{
+			Enabled = true;
 			SpriteBatch = spriteBatch;
 			GraphicsDevice = graphicsDevice;
 
@@ -61,7 +61,10 @@ namespace MonogameScreenTools
 		/// </summary>
 		public void BeginDraw()
 		{
-			GraphicsDevice.SetRenderTarget(sceneRenderTarget);
+			if (Enabled)
+			{
+				GraphicsDevice.SetRenderTarget(sceneRenderTarget);
+			}
 		}
 
 		/// <summary>
@@ -71,26 +74,29 @@ namespace MonogameScreenTools
 		/// <param name="gameTime"></param>
 		public void Draw(GameTime gameTime)
 		{
-			frameTimer.Update(gameTime);
-
-			//Grab a frame if the timer has expired
-			if (!frameTimer.Paused && !frameTimer.HasTimeRemaining)
+			if (Enabled)
 			{
-				CurrentImageList.AddFrame(sceneRenderTarget, (int)(FrameDelay * 1000));
-				frameTimer.Start(FrameDelay);
+				frameTimer.Update(gameTime);
+
+				//Grab a frame if the timer has expired
+				if (!frameTimer.Paused && !frameTimer.HasTimeRemaining)
+				{
+					CurrentImageList.AddFrame(sceneRenderTarget, (int)(FrameDelay * 1000));
+					frameTimer.Start(FrameDelay);
+				}
+
+				//Draw the entire rendered frame to the screen.
+				GraphicsDevice.SetRenderTarget(null);
+
+				int width = GraphicsDevice.PresentationParameters.BackBufferWidth;
+				int height = GraphicsDevice.PresentationParameters.BackBufferHeight;
+
+				SpriteBatch.Begin(SpriteSortMode.Deferred,
+								  BlendState.Opaque,
+								  null, null, null, null);
+				SpriteBatch.Draw(sceneRenderTarget, new Rectangle(0, 0, width, height), Color.White);
+				SpriteBatch.End();
 			}
-
-			//Draw the entire rendered frame to the screen.
-			GraphicsDevice.SetRenderTarget(null);
-
-			int width = GraphicsDevice.PresentationParameters.BackBufferWidth;
-			int height = GraphicsDevice.PresentationParameters.BackBufferHeight;
-
-			SpriteBatch.Begin(SpriteSortMode.Deferred,
-							  BlendState.Opaque,
-							  null, null, null, null);
-			SpriteBatch.Draw(sceneRenderTarget, new Rectangle(0, 0, width, height), Color.White);
-			SpriteBatch.End();
 		}
 
 		#endregion

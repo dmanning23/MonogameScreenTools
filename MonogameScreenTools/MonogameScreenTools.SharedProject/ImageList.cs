@@ -43,6 +43,18 @@ namespace MonogameScreenTools
 			}
 		}
 
+		public void CopyImageList(ImageList inst)
+		{
+			NumImages = inst.NumImages;
+			Width = inst.Width;
+			Height = inst.Height;
+
+			foreach (var image in inst.Images)
+			{
+				AddImage(image);
+			}
+		}
+
 		public void AddFrame(Texture2D tex, int delayMilliseconds = 0)
 		{
 			if (Images.Count >= NumImages)
@@ -59,19 +71,27 @@ namespace MonogameScreenTools
 			}
 		}
 
+		protected void AddImage(ImageData imageInst)
+		{
+			if (Images.Count >= NumImages)
+			{
+				var image = Images.Dequeue();
+				image.CopyImage(imageInst);
+				Images.Enqueue(image);
+			}
+			else if (Warehouse.Count > 0)
+			{
+				var image = Warehouse.Pop();
+				image.CopyImage(imageInst);
+				Images.Enqueue(image);
+			}
+		}
+
 		public void Clear()
 		{
 			foreach (var image in Images)
 			{
 				Warehouse.Push(Images.Dequeue());
-			}
-		}
-
-		public void AppendFrames(ImageList nextFrames)
-		{
-			foreach (var image in nextFrames.Images)
-			{
-				Images.Enqueue(image);
 			}
 		}
 

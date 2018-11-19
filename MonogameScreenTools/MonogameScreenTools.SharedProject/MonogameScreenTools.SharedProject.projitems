@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)IGifHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ImageData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GifHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IScreenGrabber.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IScreenShotHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ScreenGrabber.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ScreenShotHelper.cs" />

@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Advanced;
 using SixLabors.ImageSharp.Formats.Gif;
 using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing.Processors.Quantization;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -35,6 +37,8 @@ namespace MonogameScreenTools
 
 		public event EventHandler<GifCreatedEventArgs> OnGifCreated;
 
+		private string ErrorMessage { get; set; }
+
 		#endregion //Properties
 
 		#region Methods
@@ -42,9 +46,11 @@ namespace MonogameScreenTools
 		/// <summary>
 		/// Uses GifEncoder to Queue multiple frames and write them to file.
 		/// </summary>
-		/// <param name="device">The graphics device used to grab a backbuffer.</param>
 		public GifHelper()
 		{
+#if __IOS__
+			AotCompilerTools.Seed<Rgba32>();
+#endif
 		}
 
 		/// <summary>
@@ -68,6 +74,7 @@ namespace MonogameScreenTools
 			}
 			Filename = FileSystemHelper.CreateFilename(filename, ".gif", appendTimeStamp);
 
+			//WorkerThread();
 			Task.Run(() => WorkerThread());
 		}
 
@@ -86,40 +93,53 @@ namespace MonogameScreenTools
 			var stopWatch = new Stopwatch();
 			stopWatch.Start();
 
-			//open the file
-			using (var stream = File.OpenWrite(Filename))
+			try
 			{
-				var rgbaBuffer = new Rgba32[(width * height) / Scale];
-
-				//create the image to be used
-				using (var image = new Image<Rgba32>(width / Scale, height / Scale))
+				//open the file
+				using (var stream = File.OpenWrite(Filename))
 				{
-					//Convert all the monogame info to ImageSharp data
-					int imageIndex = 0;
-					foreach (var imageData in ImageList)
+					var rgbaBuffer = new Rgba32[(width * height) / Scale];
+
+					//create the image to be used
+					using (var image = new Image<Rgba32>(width / Scale, height / Scale))
 					{
-						ConvertColorData(imageData.Data, rgbaBuffer);
-						var frame = image.Frames.AddFrame(rgbaBuffer);
-						var metaData = frame.MetaData.GetFormatMetaData(GifFormat.Instance);
-
-						if (imageIndex == ImageList.Count - 1)
+						//Convert all the monogame info to ImageSharp data
+						int imageIndex = 0;
+						foreach (var imageData in ImageList)
 						{
-							metaData.FrameDelay = (int)(EndPause * 1000) / 10;
-						}
-						else
-						{
-							metaData.FrameDelay = imageData.DelayMS / 10;
+							ConvertColorData(imageData.Data, rgbaBuffer);
+							var frame = image.Frames.AddFrame(rgbaBuffer);
+							var metaData = frame.MetaData.GetFormatMetaData(GifFormat.Instance);
+
+							if (imageIndex == ImageList.Count - 1)
+							{
+								metaData.FrameDelay = (int)(EndPause * 1000) / 10;
+							}
+							else
+							{
+								metaData.FrameDelay = imageData.DelayMS / 10;
+							}
+
+							imageIndex++;
 						}
 
-						imageIndex++;
+						// remove the frame created with image creation
+						image.Frames.RemoveFrame(0);
+
+						var encoder = new GifEncoder()
+						{
+							ColorTableMode = GifColorTableMode.Local,
+							Quantizer = new OctreeQuantizer(false),
+						};
+
+						//Save it all out!
+						image.SaveAsGif<Rgba32>(stream, encoder);
 					}
-
-					// remove the frame created with image creation
-					image.Frames.RemoveFrame(0);
-
-					//Save it all out!
-					image.SaveAsGif(stream, new GifEncoder() { ColorTableMode = GifColorTableMode.Local });
 				}
+			}
+			catch (Exception ex)
+			{
+				ErrorMessage = ex.Message;
 			}
 
 			stopWatch.Stop();
@@ -151,7 +171,11 @@ namespace MonogameScreenTools
 
 			if (null != OnGifCreated)
 			{
-				OnGifCreated(this, new GifCreatedEventArgs(Filename, totalTime));
+				OnGifCreated(this, new GifCreatedEventArgs(Filename, totalTime)
+				{
+					Success = string.IsNullOrEmpty(this.ErrorMessage),
+					ErrorMessage = this.ErrorMessage
+				});
 			}
 		}
 
