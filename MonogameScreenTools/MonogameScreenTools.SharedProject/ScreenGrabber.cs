@@ -11,6 +11,7 @@ namespace MonogameScreenTools
 		SpriteBatch SpriteBatch { get; set; }
 		GraphicsDevice GraphicsDevice { get; set; }
 
+		RenderTargetBinding[] prevRenderTargets;
 		RenderTarget2D sceneRenderTarget;
 
 		public ImageList CurrentImageList { get; set; }
@@ -63,6 +64,7 @@ namespace MonogameScreenTools
 		{
 			if (Enabled)
 			{
+				prevRenderTargets = GraphicsDevice.GetRenderTargets();
 				GraphicsDevice.SetRenderTarget(sceneRenderTarget);
 			}
 		}
@@ -86,7 +88,7 @@ namespace MonogameScreenTools
 				}
 
 				//Draw the entire rendered frame to the screen.
-				GraphicsDevice.SetRenderTarget(null);
+				GraphicsDevice.SetRenderTargets(prevRenderTargets);
 
 				int width = GraphicsDevice.PresentationParameters.BackBufferWidth;
 				int height = GraphicsDevice.PresentationParameters.BackBufferHeight;
