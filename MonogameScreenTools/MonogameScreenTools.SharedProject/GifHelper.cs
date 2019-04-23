@@ -109,7 +109,7 @@ namespace MonogameScreenTools
 						{
 							ConvertColorData(imageData.Data, rgbaBuffer);
 							var frame = image.Frames.AddFrame(rgbaBuffer);
-							var metaData = frame.MetaData.GetFormatMetaData(GifFormat.Instance);
+							var metaData = frame.Metadata.GetFormatMetadata(GifFormat.Instance);
 
 							if (imageIndex == ImageList.Count - 1)
 							{

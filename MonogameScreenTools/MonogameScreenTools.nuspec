@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
 	<metadata>
 		<id>MonogameScreenTools</id>
-		<version>2.0.6</version>
+		<version>2.0.9</version>
 		<title>MonogameScreenTools</title>
 		<authors>dmanning23</authors>
 		<owners>dmanning23</owners>
