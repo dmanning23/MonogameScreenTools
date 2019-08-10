@@ -42,7 +42,7 @@ namespace MonogameScreenTools
 			// Create a texture for rendering the main scene, prior to applying bloom.
 			sceneRenderTarget = new RenderTarget2D(GraphicsDevice, width, height, false,
 												   format, pp.DepthStencilFormat, pp.MultiSampleCount,
-												   RenderTargetUsage.DiscardContents);
+												   RenderTargetUsage.PreserveContents);
 
 			CurrentImageList = new ImageList(GraphicsDevice);
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Advanced;
 using SixLabors.ImageSharp.Formats.Gif;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing.Processors.Quantization;
@@ -11,6 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Color = Microsoft.Xna.Framework.Color;
 
 namespace MonogameScreenTools
 {
@@ -48,9 +48,6 @@ namespace MonogameScreenTools
 		/// </summary>
 		public GifHelper()
 		{
-#if __IOS__
-			AotCompilerTools.Seed<Rgba32>();
-#endif
 		}
 
 		/// <summary>
@@ -133,7 +130,7 @@ namespace MonogameScreenTools
 						};
 
 						//Save it all out!
-						image.SaveAsGif<Rgba32>(stream, encoder);
+						image.Save(stream, encoder);
 					}
 				}
 			}
