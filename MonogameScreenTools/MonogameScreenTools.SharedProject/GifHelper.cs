@@ -126,7 +126,7 @@ namespace MonogameScreenTools
 						var encoder = new GifEncoder()
 						{
 							ColorTableMode = GifColorTableMode.Local,
-							Quantizer = new OctreeQuantizer(false),
+							Quantizer = new OctreeQuantizer(new QuantizerOptions { Dither = null }),
 						};
 
 						//Save it all out!
