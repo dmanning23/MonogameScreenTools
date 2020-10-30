@@ -122,6 +122,8 @@ namespace MonogameScreenTools
 
 						// remove the frame created with image creation
 						image.Frames.RemoveFrame(0);
+						var gifMetdata = image.Metadata.GetGifMetadata();
+						gifMetdata.RepeatCount = 0;
 
 						var encoder = new GifEncoder()
 						{

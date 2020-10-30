@@ -25,7 +25,7 @@ namespace MonogameScreenTools
 
 		#region Methods
 
-		public ScreenGrabber(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, float frameDelay = 0.1f)
+		public ScreenGrabber(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, float frameDelay = 0.1f, int numImages = 20)
 		{
 			Enabled = true;
 			SpriteBatch = spriteBatch;
@@ -44,7 +44,7 @@ namespace MonogameScreenTools
 												   format, pp.DepthStencilFormat, pp.MultiSampleCount,
 												   RenderTargetUsage.PreserveContents);
 
-			CurrentImageList = new ImageList(GraphicsDevice);
+			CurrentImageList = new ImageList(GraphicsDevice, numImages);
 
 			FrameDelay = frameDelay;
 			frameTimer = new CountdownTimer();
